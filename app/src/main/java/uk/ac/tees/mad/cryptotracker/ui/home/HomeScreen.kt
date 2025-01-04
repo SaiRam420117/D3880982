@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -31,10 +32,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
             TopAppBar(
                 title = { Text("CryptoTracker") },
                 actions = {
-                    IconButton(onClick = { navController.navigate("watchlist") }) {
+                    IconButton(onClick = { navController.navigate("profile") }) {
                         Icon(
-                            Icons.Default.Star,
-                            contentDescription = "Search"
+                            Icons.Default.Person,
+                            contentDescription = "Profile"
                         )
                     }
                 },
@@ -44,6 +45,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
                     actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
                 )
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { navController.navigate("watchlist") }) {
+                Icon(
+                    Icons.Default.Star,
+                    contentDescription = "Search"
+                )
+            }
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {

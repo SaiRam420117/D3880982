@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.cryptotracker.ui.auth.AuthScreen
 import uk.ac.tees.mad.cryptotracker.ui.coindetail.CryptoDetailScreen
 import uk.ac.tees.mad.cryptotracker.ui.home.HomeScreen
+import uk.ac.tees.mad.cryptotracker.ui.profile.ProfileScreen
 import uk.ac.tees.mad.cryptotracker.ui.theme.CryptoTrackerTheme
 import uk.ac.tees.mad.cryptotracker.ui.splash.SplashScreen
 import uk.ac.tees.mad.cryptotracker.ui.watchlist.WatchlistScreen
@@ -57,6 +58,8 @@ fun CryptoTrackerApp() {
         composable("watchlist") {
             WatchlistScreen(navController = navController)
         }
-        composable("profile") { }
+        composable("profile") {
+            ProfileScreen(navController = navController)
+        }
     }
 }
