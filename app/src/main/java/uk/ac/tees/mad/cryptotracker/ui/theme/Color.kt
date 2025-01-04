@@ -2,11 +2,11 @@ package uk.ac.tees.mad.cryptotracker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
-val Green200 = Color(0xFF8DE09E)
-val Green500 = Color(0xFF4CAF50)
-val Green700 = Color(0xFF3B8C40)
-val Amber500 = Color(0xFFFFC107)
-val Gray900 = Color(0xFF212121)
-val White = Color(0xFFFFFFFF)
-val Black = Color(0xFF000000)
+val PrimaryMagenta = Color(0xFFE91E63)
+val SecondaryViolet = Color(0xFF9C27B0)
+val AccentLightPink = Color(0xFFF8BBD0)
+val BackgroundDarkViolet = Color(0xFF1A1A2E)
+val SurfaceDark = Color(0xFF23233A)
+val TextWhite = Color(0xFFFFFFFF)
+val TextLightGray = Color(0xFFB0BEC5)
+val ErrorRed = Color(0xFFD32F2F)

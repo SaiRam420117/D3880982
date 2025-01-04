@@ -21,7 +21,9 @@ data class CoinDetails(
     val name: String,
     val image: Image,
     val market_data: MarketData,
-    val description: Description
+    val description: Description,
+    val market_cap_rank: Int,
+    val sentiment_votes_up_percentage: Double
 )
 
 @Serializable
@@ -36,7 +38,11 @@ data class MarketData(
     val price_change_percentage_7d: Double,
     val price_change_percentage_30d: Double,
     val market_cap: Map<String, Double>,
-    val total_volume: Map<String, Double>
+    val total_volume: Map<String, Double>,
+    val ath: Map<String, Double>,
+    val atl: Map<String, Double>,
+    val max_supply: Double?,
+    val circulating_supply: Double
 )
 
 @Serializable

@@ -8,31 +8,33 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Green200,
-    primaryContainer = Green700,
-    secondary = Amber500,
-    background = Gray900,
-    surface = Gray900,
-    onPrimary = Black,
-    onSecondary = Black,
-    onBackground = White,
-    onSurface = White
+    primary = PrimaryMagenta,
+    onPrimary = TextWhite,
+    secondary = SecondaryViolet,
+    onSecondary = TextWhite,
+    background = BackgroundDarkViolet,
+    surface = SurfaceDark,
+    onSurface = TextWhite,
+    error = ErrorRed,
+    onError = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Green500,
-    primaryContainer = Green700,
-    secondary = Amber500,
-    background = White,
-    surface = White,
-    onPrimary = White,
-    onSecondary = Black,
-    onBackground = Black,
-    onSurface = Black
+    primary = PrimaryMagenta,
+    onPrimary = Color.White,
+    secondary = SecondaryViolet,
+    onSecondary = Color.White,
+    background = Color.White,
+    surface = Color(0xFFF2F2F2),
+    onSurface = Color.Black,
+    error = ErrorRed,
+    onError = Color.White
 )
+
 
 @Composable
 fun CryptoTrackerTheme(
