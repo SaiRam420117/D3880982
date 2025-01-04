@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val PrimaryMagenta = Color(0xFFE91E63)
 val SecondaryViolet = Color(0xFF9C27B0)
 val AccentLightPink = Color(0xFFF8BBD0)
+val ProfitGreen = Color(0xFF4CAF50)
 val BackgroundDarkViolet = Color(0xFF1A1A2E)
 val SurfaceDark = Color(0xFF23233A)
 val TextWhite = Color(0xFFFFFFFF)

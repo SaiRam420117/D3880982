@@ -11,7 +11,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AllInbox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Sync
@@ -31,6 +35,7 @@ import uk.ac.tees.mad.cryptotracker.models.CoinDetails
 import uk.ac.tees.mad.cryptotracker.models.CoinResponseState
 import uk.ac.tees.mad.cryptotracker.ui.home.ErrorScreen
 import uk.ac.tees.mad.cryptotracker.ui.home.LoadingScreen
+import uk.ac.tees.mad.cryptotracker.ui.theme.ProfitGreen
 import java.util.Locale
 
 @Composable
@@ -297,10 +302,19 @@ fun PriceChangeRow(period: String, change: Double) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text("Price Change ($period)")
-        Text(
-            "${String.format(Locale.getDefault(), "%.2f", change)}%",
-            color = if (change >= 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "${String.format(Locale.getDefault(), "%.2f", change)}%",
+                color = if (change >= 0) ProfitGreen else MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Icon(
+                imageVector = if (change >= 0) Icons.Filled.ArrowDropUp else Icons.Default.ArrowDropDown,
+                contentDescription = null,
+                tint = if (change >= 0) ProfitGreen else MaterialTheme.colorScheme.error,
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 }
 
