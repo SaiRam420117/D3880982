@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
+import uk.ac.tees.mad.cryptotracker.data.database.WatchlistItem
 import uk.ac.tees.mad.cryptotracker.models.CoinDetails
 import uk.ac.tees.mad.cryptotracker.models.CoinResponseState
 import uk.ac.tees.mad.cryptotracker.ui.home.ErrorScreen
@@ -100,7 +101,10 @@ fun CoinDetailsContent(coin: CoinDetails, navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                }
+                },
+                actions = {
+                    
+                },
             )
         },
         containerColor = surfaceColor
