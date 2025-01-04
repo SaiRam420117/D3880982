@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.TrendingUp
@@ -37,6 +38,7 @@ import uk.ac.tees.mad.cryptotracker.models.CoinResponseState
 import uk.ac.tees.mad.cryptotracker.ui.home.ErrorScreen
 import uk.ac.tees.mad.cryptotracker.ui.home.LoadingScreen
 import uk.ac.tees.mad.cryptotracker.ui.theme.ProfitGreen
+import uk.ac.tees.mad.cryptotracker.ui.watchlist.WatchlistViewModel
 import java.util.Locale
 
 @Composable
@@ -75,10 +77,16 @@ fun CryptoDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CoinDetailsContent(coin: CoinDetails, navController: NavHostController) {
+fun CoinDetailsContent(
+    coin: CoinDetails,
+    navController: NavHostController,
+    watchlistViewModel: WatchlistViewModel = viewModel()
+) {
+    val isInWatchlist by watchlistViewModel.isCoinInWatchlist(coin.id)
+        .collectAsState(initial = false)
     val surfaceColor = MaterialTheme.colorScheme.surface
     val textColor = MaterialTheme.colorScheme.onSurface
-    var expandedDescription by remember { mutableStateOf(false) } // Toggle for "Show More" and "Show Less"
+    var expandedDescription by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -103,7 +111,26 @@ fun CoinDetailsContent(coin: CoinDetails, navController: NavHostController) {
                     }
                 },
                 actions = {
-                    
+                    IconButton(onClick = {
+                        val watchlistItem = WatchlistItem(
+                            id = coin.id,
+                            name = coin.name,
+                            symbol = coin.symbol,
+                            imageUrl = coin.image.large,
+                            currentPrice = coin.market_data.current_price["usd"] ?: 0.0
+                        )
+                        if (isInWatchlist) {
+                            watchlistViewModel.removeFromWatchlist(watchlistItem)
+                        } else {
+                            watchlistViewModel.addToWatchlist(watchlistItem)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = if (isInWatchlist) Icons.Default.Star else Icons.Default.StarBorder,
+                            contentDescription = if (isInWatchlist) "Remove from Watchlist" else "Add to Watchlist",
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 },
             )
         },

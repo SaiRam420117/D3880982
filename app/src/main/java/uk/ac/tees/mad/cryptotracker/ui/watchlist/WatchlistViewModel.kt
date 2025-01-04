@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.cryptotracker.ui.watchlist
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
@@ -19,12 +20,21 @@ class WatchlistViewModel(application: Application) : AndroidViewModel(applicatio
     fun addToWatchlist(coin: WatchlistItem) {
         viewModelScope.launch {
             watchlistDao.addCoinToWatchlist(coin)
+        }.invokeOnCompletion {
+            Toast.makeText(
+                getApplication(),
+                "${coin.symbol.uppercase()} added to watchlist",
+                Toast.LENGTH_SHORT
+            ).show()
+
         }
     }
 
     fun removeFromWatchlist(coin: WatchlistItem) {
         viewModelScope.launch {
             watchlistDao.removeCoinFromWatchlist(coin)
+        }.invokeOnCompletion {
+            Toast.makeText(getApplication(), "Removed from watchlist", Toast.LENGTH_SHORT).show()
         }
     }
 
