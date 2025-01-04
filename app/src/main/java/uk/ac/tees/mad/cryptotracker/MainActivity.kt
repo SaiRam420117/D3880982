@@ -16,6 +16,7 @@ import uk.ac.tees.mad.cryptotracker.ui.coindetail.CryptoDetailScreen
 import uk.ac.tees.mad.cryptotracker.ui.home.HomeScreen
 import uk.ac.tees.mad.cryptotracker.ui.theme.CryptoTrackerTheme
 import uk.ac.tees.mad.cryptotracker.ui.splash.SplashScreen
+import uk.ac.tees.mad.cryptotracker.ui.watchlist.WatchlistScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,9 @@ fun CryptoTrackerApp() {
                 navController = navController
             )
         }
-        composable("watchlist") { }
+        composable("watchlist") {
+            WatchlistScreen(navController = navController)
+        }
         composable("profile") { }
     }
 }

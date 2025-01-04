@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,10 +31,18 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
             TopAppBar(
                 title = { Text("CryptoTracker") },
                 actions = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
+                    IconButton(onClick = { navController.navigate("watchlist") }) {
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = "Search"
+                        )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                )
             )
         }
     ) { padding ->
