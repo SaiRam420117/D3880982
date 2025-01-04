@@ -6,3 +6,4 @@ sealed class ApiResponseState {
     data class Success(val coins: List<Coin>) : ApiResponseState()
     data class Error(val message: String) : ApiResponseState()
 }
+

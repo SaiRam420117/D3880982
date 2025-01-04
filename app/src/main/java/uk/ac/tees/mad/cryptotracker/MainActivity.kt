@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.cryptotracker.ui.auth.AuthScreen
+import uk.ac.tees.mad.cryptotracker.ui.coindetail.CryptoDetailScreen
 import uk.ac.tees.mad.cryptotracker.ui.home.HomeScreen
 import uk.ac.tees.mad.cryptotracker.ui.theme.CryptoTrackerTheme
 import uk.ac.tees.mad.cryptotracker.ui.splash.SplashScreen
@@ -46,10 +47,11 @@ fun CryptoTrackerApp() {
             HomeScreen(navController = navController)
         }
         composable("crypto_details/{cryptoId}") { backStackEntry ->
-//                CryptoDetailsScreen(
-//                    cryptoId = backStackEntry.arguments?.getString("cryptoId") ?: "",
-//                    navController = navController
-//                )
+            val cryptoId = backStackEntry.arguments?.getString("cryptoId") ?: return@composable
+            CryptoDetailScreen(
+                cryptoId = cryptoId,
+                navController = navController
+            )
         }
         composable("watchlist") { }
         composable("profile") { }
