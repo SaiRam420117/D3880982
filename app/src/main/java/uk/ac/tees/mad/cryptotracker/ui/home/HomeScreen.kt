@@ -48,7 +48,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("watchlist") }) {
+            FloatingActionButton(
+                onClick = { navController.navigate("watchlist") },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
                 Icon(
                     Icons.Default.Star,
                     contentDescription = "Search"
