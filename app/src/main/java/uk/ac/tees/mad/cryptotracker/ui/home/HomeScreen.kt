@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -82,7 +83,9 @@ fun LoadingScreen() {
 @Composable
 fun ErrorScreen(error: String, onRetry: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -90,6 +93,12 @@ fun ErrorScreen(error: String, onRetry: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = onRetry) {
             Text("Retry")
+            Spacer(modifier = Modifier.width(6.dp))
+            Icon(
+                imageVector = Icons.Default.Replay,
+                contentDescription = null,
+                modifier = Modifier.size(18.dp)
+            )
         }
     }
 }

@@ -18,8 +18,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.Fingerprint
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -48,6 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.FirebaseAuth
 import uk.ac.tees.mad.cryptotracker.BiometricManagerUtil
 import uk.ac.tees.mad.cryptotracker.models.ProfileState
 import uk.ac.tees.mad.cryptotracker.models.UserProfile
@@ -90,7 +95,8 @@ fun ProfileScreen(
             when (userProfile) {
                 is ProfileState.Error -> ErrorScreen((userProfile as ProfileState.Error).message) { viewModel.fetchUserProfile() }
                 is ProfileState.Success -> ProfileContainer(
-                    (userProfile as ProfileState.Success).userProfile
+                    userProfile = (userProfile as ProfileState.Success).userProfile,
+
                 )
 
                 else -> LoadingScreen()
@@ -122,6 +128,11 @@ fun ProfileContainer(userProfile: UserProfile) {
     val isFingerprintEnabled = remember {
         mutableStateOf(
             sharedPreferences.getBoolean("FingerprintEnabled", false)
+        )
+    }
+    val isDarkTheme = remember {
+        mutableStateOf(
+            sharedPreferences.getBoolean("DarkTheme", false)
         )
     }
     Column(
@@ -173,14 +184,29 @@ fun ProfileContainer(userProfile: UserProfile) {
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
-        FingerprintToggle(isFingerprintEnabled = isFingerprintEnabled.value) { isChecked ->
-            if (biometricManagerUtil.isBiometricAvailable()) {
-                isFingerprintEnabled.value = isChecked
-                sharedPreferences.edit().putBoolean("FingerprintEnabled", isChecked)
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+
+            FingerprintToggle(
+                modifier = Modifier.weight(1f),
+                isFingerprintEnabled = isFingerprintEnabled.value
+            ) { isChecked ->
+                if (biometricManagerUtil.isBiometricAvailable()) {
+                    isFingerprintEnabled.value = isChecked
+                    sharedPreferences.edit().putBoolean("FingerprintEnabled", isChecked)
+                        .apply()
+                }
+            }
+            ThemeToggle(
+                modifier = Modifier.weight(1f),
+                isDarkTheme = isDarkTheme.value
+            ) { isChecked ->
+                isDarkTheme.value = isChecked
+                sharedPreferences.edit().putBoolean("DarkTheme", isChecked)
                     .apply()
             }
         }
+
     }
 }
 
@@ -228,23 +254,62 @@ fun FingerprintToggle(
     onToggle: (Boolean) -> Unit
 ) {
     Card(
-        modifier = modifier.padding(4.dp),
+        modifier = modifier.padding(16.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(6.dp),
+        onClick = { onToggle(!isFingerprintEnabled) }
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                Icons.Outlined.Fingerprint,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(48.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Switch(
+                checked = isFingerprintEnabled,
+                onCheckedChange = onToggle
+            )
+        }
+    }
+}
+
+@Composable
+fun ThemeToggle(
+    modifier: Modifier = Modifier,
+    isDarkTheme: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    Card(
+        modifier = modifier.padding(16.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Icon(
-                Icons.Default.Fingerprint,
+                Icons.Outlined.DarkMode,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(48.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(12.dp))
             Switch(
-                checked = isFingerprintEnabled,
+                checked = isDarkTheme,
                 onCheckedChange = onToggle
             )
         }

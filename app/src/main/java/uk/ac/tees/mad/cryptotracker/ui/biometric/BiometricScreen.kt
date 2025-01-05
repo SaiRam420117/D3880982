@@ -38,22 +38,24 @@ fun BiometricScreen(navController: NavController) {
     }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        TextButton(onClick = {
-            biometricManagerUtil.showBiometricPrompt(
-                activity = context as FragmentActivity,
-                onAuthenticationSuccess = {
-                    navController.navigate("home") {
-                        popUpTo("biometric") { inclusive = true }
+        TextButton(
+            onClick = {
+                biometricManagerUtil.showBiometricPrompt(
+                    activity = context as FragmentActivity,
+                    onAuthenticationSuccess = {
+                        navController.navigate("home") {
+                            popUpTo("biometric") { inclusive = true }
+                        }
+                    },
+                    onAuthenticationError = { errorMessage ->
+                        Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_LONG).show()
+                        navController.navigate("auth") {
+                            popUpTo("biometric") { inclusive = true }
+                        }
                     }
-                },
-                onAuthenticationError = { errorMessage ->
-                    Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_LONG).show()
-                    navController.navigate("auth") {
-                        popUpTo("biometric") { inclusive = true }
-                    }
-                }
-            )
-        }) {
+                )
+            }
+        ) {
             Text("Authenticate")
         }
     }
